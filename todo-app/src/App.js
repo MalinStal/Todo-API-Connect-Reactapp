@@ -5,7 +5,31 @@ function App() {
 
   const [todo, setTodo] = useState({id: 1,title: "", description: "", completed: false});
   const [list, setList] = useState([]);
-  
+
+
+  useEffect(() => {
+    fetch("http://localhost:5213/todo/get")
+    .then(res => res.json())
+    .then(setList);
+  },[])
+ const handelSubmit = (e) => {
+  e.preventDefault();
+  fetch("http://localhost:5213/todo/add", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      title: todo.title,
+      description: todo.description
+    })
+  })
+  .then(res => res.json())
+  .then(todos => {
+    setList([...list, todos]);
+  })
+};
+ 
 const handelChange = (e) => {
   e.preventDefault();
   const { name, value } = e.target;
@@ -21,19 +45,18 @@ const handelChange = (e) => {
    
 }
 
-
-  const handelSubmit = (e) => { 
-    e.preventDefault();
-    setList((prev) => [...prev,todo])
-    setTodo((prev)=>(
-      {
-        id: prev.id+1, title: "", description:""
-      }
-      )
+//   const handelSubmit = (e) => { 
+//     e.preventDefault();
+//     setList((prev) => [...prev,todo])
+//     setTodo((prev)=>(
+//       {
+//         id: prev.id+1, title: "", description:""
+//       }
+//       )
    
-   )
-    console.log(todo.id)
-  }
+//    )
+//     console.log(todo.id)
+//   }
 
 
   return (

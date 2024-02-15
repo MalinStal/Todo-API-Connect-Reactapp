@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 namespace Todo_api;
 
@@ -25,6 +26,7 @@ public TodoControllers(TodoService TodoService){
 }
 
   [HttpPost("add")]
+  [EnableCors]
     public IActionResult CreateTodo([FromBody] TodoDto dto)
     {
         try
@@ -38,23 +40,17 @@ public TodoControllers(TodoService TodoService){
         }
     }
 
-// [HttpPost("add")]
-// public IActionResult CreateTodo([FromBody] TodoDto dto ){
 
-// Todo todo = todoService.CreateTodo(dto.Title, dto.Description);
-// if(todo == null){
-//     return NotFound("Could not found");
-// }
-// return Ok(todo);
-// }
 
 [HttpGet("get")]
+ [EnableCors]
 public List<Todo> GetTodos(){
     return todoService.GetAllTodos();
 }
 
 
 [HttpPut("update/{id}")]
+ [EnableCors]
 public IActionResult UpdateTodos(int id, [FromQuery] bool completed){
    Todo? todo  =  todoService.UpdateTodo(id, completed);
    if(todo == null){
@@ -64,6 +60,7 @@ public IActionResult UpdateTodos(int id, [FromQuery] bool completed){
 }
 
 [HttpDelete("delete/{id}")]
+ [EnableCors]
 public IActionResult RemoveTodo(int id){
     Todo? todo= todoService.RemoveTodo(id);
     if(todo == null){
