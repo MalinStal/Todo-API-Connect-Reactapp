@@ -1,10 +1,21 @@
 namespace Todo_api;
 
-class TodoService{
+public class TodoService{
 
-List<Todo> todos = new List<Todo>();
-   public Todo AddTodo(string title, string description){
-        Todo todo = new Todo(title, description);
+public List<Todo> todos = new List<Todo>();
+   public Todo? CreateTodo(string title, string description)
+   {
+
+    if(string.IsNullOrWhiteSpace(title))
+    {
+        throw new ArgumentException("you need to enter a title");
+    }
+     if(string.IsNullOrWhiteSpace(description))
+     {
+        throw new ArgumentException("you need to enter a description");
+    }
+       
+        Todo? todo = new Todo(title, description);
         todos.Add(todo);
         return todo;
     }

@@ -9,14 +9,14 @@ public class Todo
     public string Title { get; set; }
     public string Description { get; set; }
     public bool Completed { get; set; }
-    public DateTime CreationDate { get; set; }
+   // public DateTime CreationDate { get; set; }
 
     public Todo(string title, string description)
     {
         this.Title = title;
         this.Description = description;
         this.Completed = false;
-        this.CreationDate = DateTime.Now;
+       // this.CreationDate = DateTime.Now;
         this.Id = ID_COUNTER++;
     }
 
