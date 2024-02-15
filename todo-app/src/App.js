@@ -3,7 +3,7 @@ import './App.css';
 
 function App() {
 
-  const [todo, setTodo] = useState({title: "", description: ""});
+  const [todo, setTodo] = useState({id: 1,title: "", description: "", completed: false});
   const [list, setList] = useState([]);
   
 const handelChange = (e) => {
@@ -12,19 +12,27 @@ const handelChange = (e) => {
  
   setTodo((prev) =>
     (
-      {...prev, 
-        [name]: value
+      {...prev,
+       
+        [name]: value,
+        completed : e.target.checked
       }
     ))
+   
 }
+
 
   const handelSubmit = (e) => { 
     e.preventDefault();
     setList((prev) => [...prev,todo])
-    setTodo(
-    {title: "", description:""}
-   )
+    setTodo((prev)=>(
+      {
+        id: prev.id+1, title: "", description:""
+      }
+      )
    
+   )
+    console.log(todo.id)
   }
 
 
@@ -51,8 +59,14 @@ const handelChange = (e) => {
       return (
 
         <li key={index}>
-          <h3 >{todo.title}</h3>
+          <h3 >{todo.title} id: {todo.id}</h3>
           <h5 >{todo.description}</h5>
+          <input 
+          type='checkbox' 
+          name='completed' 
+          value={todo.completed}
+          onChange={handelChange}
+          />
         </li>
          )})
         }
