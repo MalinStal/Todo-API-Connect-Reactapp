@@ -26,7 +26,7 @@ public TodoControllers(TodoService TodoService){
 }
 
   [HttpPost("add")]
-  [EnableCors]
+  [EnableCors("test")]
     public IActionResult CreateTodo([FromBody] TodoDto dto)
     {
         try
@@ -43,7 +43,7 @@ public TodoControllers(TodoService TodoService){
 
 
 [HttpGet("get")]
- [EnableCors]
+ [EnableCors("test")]
 public List<Todo> GetTodos(){
     return todoService.GetAllTodos();
 }

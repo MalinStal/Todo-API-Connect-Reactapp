@@ -2,3 +2,20 @@ body{
   background-color: black;
   color: rgb(53, 230, 230);
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+  max-width: 500px;
+}
+
+button{
+  width: 100px;
+  padding: 4px;
+}
+
+input{
+  padding: 5px;
+}

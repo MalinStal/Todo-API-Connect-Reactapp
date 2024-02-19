@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
-
+//idet i todo verkar inte ha någon inverkan 
   const [todo, setTodo] = useState({id: 1,title: "", description: "", completed: false});
   const [list, setList] = useState([]);
 
@@ -12,6 +12,7 @@ function App() {
     .then(res => res.json())
     .then(setList);
   },[])
+
  const handelSubmit = (e) => {
   e.preventDefault();
   fetch("http://localhost:5213/todo/add", {
@@ -27,9 +28,33 @@ function App() {
   .then(res => res.json())
   .then(todos => {
     setList([...list, todos]);
+    setTodo({ title: "", description: "", completed: false });
   })
+
 };
- 
+ //RemoveTodo tar bort men man får ändå fel meddelanden. har inte fel sökt detta mer. Får göra vid annat tillfälle. 
+const removeTodo = (id) => {
+fetch(`http://localhost:5213/todo/delete/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json"
+    },
+  })
+  .then(res => res.json())
+  .then(() => {
+    setList(list.filter(todo => todo.id !== id));
+  })
+}
+
+const handelCheckbox = (e, id) => {
+  const { name, value, checked } = e.target;
+  setList(list.map(todo => {
+    if (todo.id === id) {
+      return { ...todo, [name]: name === 'completed' ? checked : value };
+    }
+    return todo;
+  }));
+};
 const handelChange = (e) => {
   e.preventDefault();
   const { name, value } = e.target;
@@ -45,18 +70,6 @@ const handelChange = (e) => {
    
 }
 
-//   const handelSubmit = (e) => { 
-//     e.preventDefault();
-//     setList((prev) => [...prev,todo])
-//     setTodo((prev)=>(
-//       {
-//         id: prev.id+1, title: "", description:""
-//       }
-//       )
-   
-//    )
-//     console.log(todo.id)
-//   }
 
 
   return (
@@ -88,8 +101,9 @@ const handelChange = (e) => {
           type='checkbox' 
           name='completed' 
           value={todo.completed}
-          onChange={handelChange}
+          onChange={(e) =>handelCheckbox(e, todo.id)}
           />
+          <button onClick={() => removeTodo(todo.id)}>Remove</button>
         </li>
          )})
         }
