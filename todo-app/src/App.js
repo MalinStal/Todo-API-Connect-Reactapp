@@ -3,7 +3,7 @@ import './App.css';
 
 function App() {
 //idet i todo verkar inte ha någon inverkan 
-  const [todo, setTodo] = useState({id: 1,title: "", description: "", completed: false});
+  const [todo, setTodo] = useState({title: "", description: "", completed: false});
   const [list, setList] = useState([]);
 
 
