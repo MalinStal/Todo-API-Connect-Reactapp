@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\malin\\Desktop\\aspnet\\todo_api\\Backend\\Backend.csproj": {}
+    "c:\\Users\\malin\\Desktop\\aspnet\\todo_api\\Backend\\Backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\malin\\Desktop\\aspnet\\todo_api\\Backend\\Backend.csproj": {
+    "c:\\Users\\malin\\Desktop\\aspnet\\todo_api\\Backend\\Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\malin\\Desktop\\aspnet\\todo_api\\Backend\\Backend.csproj",
+        "projectUniqueName": "c:\\Users\\malin\\Desktop\\aspnet\\todo_api\\Backend\\Backend.csproj",
         "projectName": "Backend",
-        "projectPath": "C:\\Users\\malin\\Desktop\\aspnet\\todo_api\\Backend\\Backend.csproj",
+        "projectPath": "c:\\Users\\malin\\Desktop\\aspnet\\todo_api\\Backend\\Backend.csproj",
         "packagesPath": "C:\\Users\\malin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\malin\\Desktop\\aspnet\\todo_api\\Backend\\obj\\",
+        "outputPath": "c:\\Users\\malin\\Desktop\\aspnet\\todo_api\\Backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\malin\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -43,6 +43,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[8.0.0, )"

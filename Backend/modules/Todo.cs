@@ -18,7 +18,7 @@ public class Todo
         this.Title = title;
         this.Description = description;
         this.Completed = false;
-        this.CreationDate = DateTime.Now;
+        this.CreationDate = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
        
     }
 

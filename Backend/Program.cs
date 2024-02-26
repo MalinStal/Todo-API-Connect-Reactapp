@@ -17,7 +17,7 @@ public class Program
                 )
         );
         builder.Services.AddControllers();
-        builder.Services.AddSingleton<TodoService, TodoService>();     
+        builder.Services.AddScoped<TodoService, TodoService>();     
        
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();

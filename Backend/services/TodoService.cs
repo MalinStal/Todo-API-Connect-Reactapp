@@ -2,7 +2,13 @@ namespace Todo_api;
 
 public class TodoService{
 
-public List<Todo> todos = new List<Todo>();
+//public List<Todo> todos = new List<Todo>();
+
+private TodoDbContext context;
+
+public TodoService(TodoDbContext context){
+    this.context = context;
+}
    public Todo? CreateTodo(string title, string description)
    {
 
@@ -16,38 +22,37 @@ public List<Todo> todos = new List<Todo>();
     }
        
         Todo? todo = new Todo(title, description);
-        todos.Add(todo);
+        context.Todos.Add(todo);
+        context.SaveChanges();
         return todo;
     }
 
     public Todo? RemoveTodo(int id ){
-        for(int i = 0; i < todos.Count; i++){
-        if (todos[i].Id == id)
-            {
-                Todo todo = todos[i];
-                todos.RemoveAt(i);
-                return todo;
-            }
-        } 
+       Todo? todo = context.Todos.Find(id);
+       if(todo == null ){
         return null;
+       }
+       context.Todos.Remove(todo);
+       context.SaveChanges();
+
+       return todo;
     }
 
     public List<Todo> GetAllTodos(){
-        return todos;
+        return context.Todos.ToList();
     }
 
     public Todo? UpdateTodo(int id, bool completed){
-       for (int i = 0; i < todos.Count; i++)
+           Todo? todo = context.Todos.Find(id);
+        if (todo == null)
         {
-            if (todos[i].Id == id)
-            {
-                Todo todo = todos[i];
-                todo.Completed = completed;
-                return todo;
-            }
+            return null;
         }
 
-        return null;
+        todo.Completed = completed;
+        context.SaveChanges();
+
+        return todo;
     }
 
  
