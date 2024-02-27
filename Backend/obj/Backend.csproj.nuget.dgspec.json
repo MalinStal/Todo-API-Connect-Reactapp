@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\malin\\Desktop\\aspnet\\todo_api\\Backend\\Backend.csproj": {}
+    "C:\\Users\\malin\\Desktop\\aspnet\\todo_api\\Backend\\Backend.csproj": {}
   },
   "projects": {
-    "c:\\Users\\malin\\Desktop\\aspnet\\todo_api\\Backend\\Backend.csproj": {
+    "C:\\Users\\malin\\Desktop\\aspnet\\todo_api\\Backend\\Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\malin\\Desktop\\aspnet\\todo_api\\Backend\\Backend.csproj",
+        "projectUniqueName": "C:\\Users\\malin\\Desktop\\aspnet\\todo_api\\Backend\\Backend.csproj",
         "projectName": "Backend",
-        "projectPath": "c:\\Users\\malin\\Desktop\\aspnet\\todo_api\\Backend\\Backend.csproj",
+        "projectPath": "C:\\Users\\malin\\Desktop\\aspnet\\todo_api\\Backend\\Backend.csproj",
         "packagesPath": "C:\\Users\\malin\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\malin\\Desktop\\aspnet\\todo_api\\Backend\\obj\\",
+        "outputPath": "C:\\Users\\malin\\Desktop\\aspnet\\todo_api\\Backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\malin\\AppData\\Roaming\\NuGet\\NuGet.Config"

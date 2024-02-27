@@ -1,38 +1,42 @@
+using System.Diagnostics;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+
 namespace Todo_api;
-
-public class TodoDto{
-   
-    public string Title {get; set;} = ""; 
-    public string Description {get; set;} = ""; 
-
-
-
-    public TodoDto(string title, string description){
-        this.Title = title;
-        this.Description =description;
-    }
-}
 
 [ApiController]
 [Route("todo")]
-public class TodoControllers : ControllerBase{
+public class TodoControllers : ControllerBase
+{
+    TodoService todoService;
 
-TodoService todoService;
+    public TodoControllers(TodoService TodoService)
+    {
+        this.todoService = TodoService;
+    }
 
-public TodoControllers(TodoService TodoService){
-    this.todoService = TodoService;
-}
-
-  [HttpPost("add")]
-  [EnableCors("test")]
-    public IActionResult CreateTodo([FromBody] TodoDto dto)
+    [HttpPost("add")]
+    [EnableCors("test")]
+    [Authorize("create-todo")]
+    public IActionResult CreateTodo([FromBody] CreateTodoDto dto)
     {
         try
         {
-            Todo? todo = todoService.CreateTodo(dto.Title, dto.Description);
-            return Ok(todo);
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (id == null)
+            {
+                throw new Exception("user is null");
+            }
+            Todo? todo = todoService.CreateTodo(dto.Title, dto.Description, id);
+            if (todo == null)
+            {
+                throw new Exception("output is null");
+            }
+            TodoDto? output = new TodoDto(todo);
+
+            return Ok(output);
         }
         catch (ArgumentException)
         {
@@ -40,33 +44,56 @@ public TodoControllers(TodoService TodoService){
         }
     }
 
-
-
-[HttpGet("get")]
- [EnableCors("test")]
-public List<Todo> GetTodos(){
-    return todoService.GetAllTodos();
-}
-
-
-[HttpPut("update/{id}")]
- [EnableCors]
-public IActionResult UpdateTodos(int id, [FromQuery] bool completed){
-   Todo? todo  =  todoService.UpdateTodo(id, completed);
-   if(todo == null){
-    return NotFound();
-   }
-   return Ok(todo);
-}
-
-[HttpDelete("delete/{id}")]
- [EnableCors]
-public IActionResult RemoveTodo(int id){
-    Todo? todo= todoService.RemoveTodo(id);
-    if(todo == null){
-        return NotFound();
+    [HttpGet("get")]
+    [EnableCors("test")]
+    [Authorize("get-todos")]
+    public List<TodoDto> GetTodos()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if(userId != null){
+             return todoService.GetAllTodos(userId).Select(todo => new TodoDto(todo)).ToList();
+        }
+        return new List<TodoDto>();
     }
-    return Ok(todo);
-}
 
+    [HttpPut("update/{id}")]
+    [EnableCors]
+    [Authorize("update-todo")]
+    public IActionResult UpdateTodos(int id, [FromQuery] bool completed)
+    {
+        
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userId == null)
+        {
+            return NotFound();
+        }
+
+        Todo? todo = todoService.UpdateTodo(id, completed, userId);
+        if (todo == null)
+        {
+            return NotFound();
+        }
+
+        TodoDto output = new TodoDto(todo);
+        return Ok(output);
+    }
+
+    [HttpDelete("delete/{id}")]
+    [EnableCors]
+    [Authorize("delete-todo")]
+    public IActionResult RemoveTodo(int id)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userId == null)
+        {
+            throw new Exception("user is null");
+        }
+        Todo? todo = todoService.RemoveTodo(id, userId);
+        if (todo == null)
+        {
+            return NotFound();
+        }
+        TodoDto output = new TodoDto(todo);
+        return Ok(output);
+    }
 }
